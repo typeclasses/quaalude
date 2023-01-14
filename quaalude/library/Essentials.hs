@@ -7,7 +7,7 @@ module Essentials
     {- * Bool                -} Bool (False, True), otherwise,
     {- * Comparison          -} (==), (/=), (<), (>), (<=), (>=),
     {- * Monoid              -} (<>), mempty,
-    {- * Numbers             -} Natural, Integer, Int, (+), (-),
+    {- * Numbers             -} Natural, Integer, (+), (-),
     {- * Traversal           -} traverse, traverse_,
     {- * Maybe               -} Maybe (Nothing, Just), maybe,
     {- * Void                -} Void, absurd,
@@ -29,7 +29,6 @@ import Data.Function         (($), (&), (.))
 import Data.Functor          (Functor, fmap, void, ($>), (<$), (<$>), (<&>))
 import Data.Functor.Const    (Const (..))
 import Data.Functor.Identity (Identity (..))
-import Data.Int              (Int)
 import Data.Maybe            (Maybe (Just, Nothing), maybe)
 import Data.Monoid           (Monoid, mempty)
 import Data.Ord              (Ord, (<), (>), (<=), (>=))
