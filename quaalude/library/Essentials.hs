@@ -2,7 +2,7 @@ module Essentials
   (
     {- * Functions           -} ($), (&), (.), (>>>), (<<<),
     {- * Functor             -} fmap, (<$>), (<&>), (<$), ($>), void,
-    {- * Applicative         -} pure, (<*>), (<*), (*>),
+    {- * Applicative         -} pure, (<*>), (<**>), (<*), (*>),
     {- * Monad               -} (>>=), (=<<), (>=>), (<=<),
     {- * Bool                -} Bool (False, True), otherwise,
     {- * Comparison          -} (==), (/=), (<), (>), (<=), (>=),
@@ -19,7 +19,7 @@ module Essentials
   )
   where
 
-import Control.Applicative   (Applicative, pure, (*>), (<*), (<*>))
+import Control.Applicative   (Applicative, pure, (*>), (<*), (<*>), (<**>))
 import Control.Arrow         ((>>>), (<<<))
 import Control.Monad         (Monad, (<=<), (=<<), (>=>), (>>=))
 import Data.Bool             (Bool (False, True), otherwise)
