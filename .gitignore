@@ -1,4 +1,5 @@
-hie.yaml
 result
 result-*
+*.yaml
 *.local
+dist-*
