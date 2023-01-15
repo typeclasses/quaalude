@@ -8,7 +8,6 @@ module Essentials
     {- * Boole               -} Bool (False, True), otherwise,
     {- * Comparison          -} (==), (/=), (<), (>), (<=), (>=),
     {- * Monoid              -} (<>), mempty,
-    {- * Numbers             -} Natural, Integer, (+), (-),
     {- * Traversal           -} traverse, traverse_,
     {- * Maybe               -} Maybe (Nothing, Just), maybe,
     {- * Void                -} Void, absurd,
@@ -38,6 +37,5 @@ import Data.Ord              (Ord, (<), (>), (<=), (>=))
 import Data.Semigroup        (Semigroup, (<>))
 import Data.Traversable      (Traversable, traverse)
 import Data.Void             (Void, absurd)
-import Numeric.Natural       (Natural)
-import Prelude               (Bounded, Enum, Integer, undefined, (+), (-))
+import Prelude               (Bounded, Enum, undefined)
 import Text.Show             (Show)

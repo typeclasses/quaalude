@@ -27,16 +27,16 @@ the `Essentials` module is that it includes only things in the latter category.
 ## Category
 
 ```haskell
-id         :: Category cat => cat a a
-(>>>)      :: Category cat => cat a b -> cat b c -> cat a c
+id :: Category cat => cat a a
+(>>>) :: Category cat => cat a b -> cat b c -> cat a c
 (<<<), (.) :: Category cat => cat b c -> cat a b -> cat a c
 ```
 
 Usually specialized as `cat ~ (->)`:
 
 ```haskell
-id         :: a -> a
-(>>>)      :: (a -> b) -> (b -> c) -> a -> c
+id :: a -> a
+(>>>) :: (a -> b) -> (b -> c) -> a -> c
 (<<<), (.) :: (b -> c) -> (a -> b) -> a -> c
 ```
 
@@ -44,39 +44,70 @@ id         :: a -> a
 
 `(.)` is the same as `(<<<)`, but with higher operator precedence.
 
-## Functor
+## Functor, Applicative, Monad
+
+```haskell
+pure :: Applicative f => a -> f a
+```
 
 ```haskell
 fmap, (<$>) :: Functor f => (a -> b) -> f a -> f b
-(<&>)       :: Functor f => f a -> (a -> b) -> f b
-(<$)        :: Functor f => a -> f b        -> f a
-($>)        :: Functor f => f a -> b        -> f b
-void        :: Functor f => f a             -> f ()
+(<&>) :: Functor f => f a -> (a -> b) -> f b
 ```
 
-## Applicative
+`(<$>)` is the same as `fmap`.
+`(<$>)` and `(<&>)` are also the same function, just flipped.
+`(<$>)` has higher operator precedence.
 
-pure, (<*>), (<**>), (<*), (*>),
+```haskell
+(<*>) :: Applicative f => f (a -> b) -> f a -> f b
+(<**>) :: Applicative f => f a -> f (a -> b) -> f b
+```
 
-## Monad
+`(<*>)` and `(<**>)` are the same function, just flipped.
 
-(>>=), (=<<), (>=>), (<=<),
+```haskell
+(>>=) :: Monad m => m a -> (a -> m b) -> m b
+(=<<) :: Monad m => (a -> m b) -> m a -> m b
+(>=>) :: Monad m => (a -> m b) -> (b -> m c) -> a -> m c
+(<=<) :: Monad m => (b -> m c) -> (a -> m b) -> a -> m c
+```
+
+`(>>=)` is left associative; `(>>=)` is right associative.
+
+These functions keep all effects but discard some values:
+
+```haskell
+(<$) :: Functor f => a -> f b -> f a
+($>) :: Functor f => f a -> b -> f b
+(*>) :: Applicative f => f a -> f b -> f b
+(<*) :: Applicative f => f a -> f b -> f a
+void :: Functor f => f a -> f ()
+```
 
 ## Boole
 
-Bool (False, True), otherwise,
+```haskell
+data Bool = False | True
+```
+
+```haskell
+otherwise = True
+```
 
 ## Comparison
 
-(==), (/=), (<), (>), (<=), (>=),
+```haskell
+(==), (/=) :: Eq a => a -> a -> Bool
+(<), (>), (<=), (>=) :: Ord a => a -> a -> Bool
+```
 
 ## Monoid
 
-(<>), mempty,
-
-## Numbers
-
-Natural, Integer, (+), (-),
+```haskell
+(<>) :: Semigroup a => a -> a -> a
+mempty :: Monoid a => a
+```
 
 ## Traversal
 
@@ -118,12 +149,10 @@ undefined,
 
 ```haskell
 infixr 0 $
-infixl 1 &
-infixl 1 <&>
-infixr 1 <<<
-infixr 1 >>>
-infixl 4 <$>
-infixl 4 <$
-infixl 4 $>
+infixl 1 & <&> >>=
+infixr 1 =<< >=> <=< <<< >>>
+infixl 4 <$> <$ $> <*> <**> *> <*
+infix 4 == /= < > <= >=
+infixr 6 <>
 infixr 9 .
 ```
