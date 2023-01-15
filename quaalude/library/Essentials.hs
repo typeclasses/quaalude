@@ -1,6 +1,7 @@
 module Essentials
   (
-    {- * Functions           -} ($), (&), (.), (>>>), (<<<),
+    {- * Functions           -} ($), (&),
+    {- * Categories          -} id, (.), (>>>), (<<<),
     {- * Functor             -} fmap, (<$>), (<&>), (<$), ($>), void,
     {- * Applicative         -} pure, (<*>), (<**>), (<*), (*>),
     {- * Monad               -} (>>=), (=<<), (>=>), (<=<),
@@ -21,12 +22,12 @@ module Essentials
   where
 
 import Control.Applicative   (Applicative, pure, (*>), (<*), (<*>), (<**>))
-import Control.Arrow         ((>>>), (<<<))
+import Control.Category      (id, (.), (>>>), (<<<))
 import Control.Monad         (Monad, (<=<), (=<<), (>=>), (>>=))
 import Data.Bool             (Bool (False, True), otherwise)
 import Data.Eq               (Eq, (/=), (==))
 import Data.Foldable         (Foldable, traverse_)
-import Data.Function         (($), (&), (.))
+import Data.Function         (($), (&))
 import Data.Functor          (Functor, fmap, void, ($>), (<$), (<$>), (<&>))
 import Data.Functor.Const    (Const (Const, getConst))
 import Data.Functor.Identity (Identity (Identity, runIdentity))
