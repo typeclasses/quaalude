@@ -15,6 +15,7 @@ module Essentials
     {- * Const               -} Const (Const, getConst),
     {- * Type classes        -} Semigroup, Monoid, Eq, Ord, Enum, Bounded, Show,
     {- * Constructor classes -} Functor, Applicative, Monad, Foldable, Traversable,
+    {- * Type                -} Type,
     {- * Undefined           -} undefined,
   )
   where
@@ -29,6 +30,7 @@ import Data.Function         (($), (&), (.))
 import Data.Functor          (Functor, fmap, void, ($>), (<$), (<$>), (<&>))
 import Data.Functor.Const    (Const (..))
 import Data.Functor.Identity (Identity (..))
+import Data.Kind             (Type)
 import Data.Maybe            (Maybe (Just, Nothing), maybe)
 import Data.Monoid           (Monoid, mempty)
 import Data.Ord              (Ord, (<), (>), (<=), (>=))
