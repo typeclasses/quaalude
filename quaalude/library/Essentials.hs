@@ -1,11 +1,11 @@
 module Essentials
   (
-    {- * Functions           -} ($), (&),
-    {- * Categories          -} id, (.), (>>>), (<<<),
+    {- * Function            -} ($), (&),
+    {- * Category            -} id, (.), (>>>), (<<<),
     {- * Functor             -} fmap, (<$>), (<&>), (<$), ($>), void,
     {- * Applicative         -} pure, (<*>), (<**>), (<*), (*>),
     {- * Monad               -} (>>=), (=<<), (>=>), (<=<),
-    {- * Bool                -} Bool (False, True), otherwise,
+    {- * Boole               -} Bool (False, True), otherwise,
     {- * Comparison          -} (==), (/=), (<), (>), (<=), (>=),
     {- * Monoid              -} (<>), mempty,
     {- * Numbers             -} Natural, Integer, (+), (-),
