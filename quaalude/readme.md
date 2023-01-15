@@ -12,7 +12,7 @@ function that is an abbreviation for 'logarithm'; a logging library might define
 a function of the same name that writes an event to a log file. Some names,
 however, are more sacrosanct. It would be generally unwise and unappreciated to
 define anything named `pure` or `(>>=)`, for example. The guiding principle for
-the `Essentials` module is that it includes only things in the latter category.
+the `Essentials` module is that it includes things in the latter category.
 
 ## Function
 
@@ -69,6 +69,7 @@ fmap, (<$>) :: Functor f => (a -> b) -> f a -> f b
 ```haskell
 (>>=) :: Monad m => m a -> (a -> m b) -> m b
 (=<<) :: Monad m => (a -> m b) -> m a -> m b
+
 (>=>) :: Monad m => (a -> m b) -> (b -> m c) -> a -> m c
 (<=<) :: Monad m => (b -> m c) -> (a -> m b) -> a -> m c
 ```
@@ -79,9 +80,11 @@ These functions keep all effects but discard some values:
 
 ```haskell
 (<$) :: Functor f => a -> f b -> f a
+(<*) :: Applicative f => f a -> f b -> f a
+
 ($>) :: Functor f => f a -> b -> f b
 (*>) :: Applicative f => f a -> f b -> f b
-(<*) :: Applicative f => f a -> f b -> f a
+
 void :: Functor f => f a -> f ()
 ```
 
@@ -89,9 +92,7 @@ void :: Functor f => f a -> f ()
 
 ```haskell
 data Bool = False | True
-```
 
-```haskell
 otherwise = True
 ```
 
@@ -99,6 +100,7 @@ otherwise = True
 
 ```haskell
 (==), (/=) :: Eq a => a -> a -> Bool
+
 (<), (>), (<=), (>=) :: Ord a => a -> a -> Bool
 ```
 
@@ -111,48 +113,95 @@ mempty :: Monoid a => a
 
 ## Traversal
 
-traverse, traverse_,
+```haskell
+traverse :: Traversable t => Applicative f =>
+    (a -> f b) -> t a -> f (t b)
+
+traverse_ :: Foldable t => Applicative f =>
+    (a -> f b) -> t a -> f ()
+```
 
 ## Maybe
 
-Maybe (Nothing, Just), maybe,
+```haskell
+data Maybe a =
+    Nothing | Just a
+```
+
+```haskell
+maybe :: b -> (a -> b) -> Maybe a -> b
+```
 
 ## Void
 
-## Void, absurd,
+```haskell
+data Void
+```
+
+```haskell
+absurd :: Void -> a
+```
 
 ## Identity
 
-Identity (Identity, runIdentity),
+```haskell
+newtype Identity a =
+    Identity {runIdentity :: a}
+```
 
 ## Const
 
-Const (Const, getConst),
+```haskell
+newtype Const a b =
+    Const {getConst :: a}
+```
 
 ## Type classes
 
-Semigroup, Monoid, Eq, Ord, Enum, Bounded, Show,
+* `Semigroup`
+* `Monoid`
+* `Eq`
+* `Ord`
+* `Enum`
+* `Bounded`
+* `Show`
 
 ## Constructor classes
 
-Functor, Applicative, Monad, Foldable, Traversable,
+* `Functor`
+* `Applicative`
+* `Monad`
+* `Foldable`
+* `Traversable`
 
 ## Type
 
-Type,
+* `Type`
 
 ## Undefined
 
-undefined,
+```haskell
+undefined :: a
+```
 
 ## Fixities
 
 ```haskell
-infixr 0 $
-infixl 1 & <&> >>=
-infixr 1 =<< >=> <=< <<< >>>
-infixl 4 <$> <$ $> <*> <**> *> <*
-infix 4 == /= < > <= >=
-infixr 6 <>
-infixr 9 .
+infixr 0  $
+
+infixl 1  &  <&>  >>=
+
+infixr 1  =<<  <=<  >=>
+               <<<  >>>
+
+infixl 4  <$>  <$  $>
+          <*>  *>  <*  <**>
+
+infix  4  ==  /=
+          <   >
+          <=  >=
+
+infixr 6  <>
+
+infixr 9  .
 ```
