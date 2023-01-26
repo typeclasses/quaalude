@@ -74,7 +74,7 @@ fmap, (<$>) :: Functor f => (a -> b) -> f a -> f b
 (<=<) :: Monad m => (b -> m c) -> (a -> m b) -> a -> m c
 ```
 
-`(>>=)` is left associative; `(>>=)` is right associative.
+`(>>=)` is left associative; `(=<<)` is right associative.
 
 These functions keep all effects but discard some values:
 

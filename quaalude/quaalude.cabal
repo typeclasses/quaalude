@@ -1,11 +1,11 @@
 cabal-version: 3.0
 
 name: quaalude
-version: 0.0.0.0
+version: 0.0.0.1
 synopsis: Extremely minimal prelude
 category: Prelude
 
-description: "Essentials" is an minimal Prelude alternative containing
+description: "Essentials" is a minimal Prelude alternative containing
     only what is truly needed by the vast majority of modules.
 
 license: Apache-2.0
