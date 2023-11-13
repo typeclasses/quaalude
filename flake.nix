@@ -2,17 +2,15 @@
   description = "quaalude";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, flake-utils }:
+  outputs = { self, nixpkgs, flake-utils }:
     let packageName = "quaalude";
     in flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
-        pkgsUnstable = import nixpkgs-unstable { inherit system; };
 
         project = pkgs.haskellPackages.developPackage {
           root = ./quaalude;
@@ -24,37 +22,38 @@
         combineOverrides = old:
           fold composeExtensions (old.overrides or (_: _: { }));
 
-      in {
+      in
+      {
         defaultPackage = self.packages.${system}.${packageName};
 
         packages = {
           "${packageName}" = project;
 
-          testConfigurations = let
+          testConfigurations =
+            let
 
-            inherit (pkgs.haskell.lib) dontCheck;
-            makeTestConfiguration = let defaultPkgs = pkgs;
-            in { pkgs ? defaultPkgs, ghcVersion, overrides ? new: old: { } }:
-            let inherit (pkgs.haskell.lib) dontCheck packageSourceOverrides;
-            in (pkgs.haskell.packages.${ghcVersion}.override (old: {
-              overrides = combineOverrides old [
-                (packageSourceOverrides { quaalude = ./quaalude; })
-                (new: old: { })
-                overrides
-              ];
-            })).quaalude;
-          in rec {
-            ghc-9-2 = makeTestConfiguration { ghcVersion = "ghc92"; };
-            ghc-9-4 = makeTestConfiguration { ghcVersion = "ghc94"; };
-            ghc-9-6 = makeTestConfiguration {
-              ghcVersion = "ghc96";
-              pkgs = pkgsUnstable;
+              inherit (pkgs.haskell.lib) dontCheck;
+              makeTestConfiguration =
+                let defaultPkgs = pkgs;
+                in { pkgs ? defaultPkgs, ghcVersion, overrides ? new: old: { } }:
+                  let inherit (pkgs.haskell.lib) dontCheck packageSourceOverrides;
+                  in (pkgs.haskell.packages.${ghcVersion}.override (old: {
+                    overrides = combineOverrides old [
+                      (packageSourceOverrides { quaalude = ./quaalude; })
+                      (new: old: { })
+                      overrides
+                    ];
+                  })).quaalude;
+            in
+            rec {
+              ghc-9-2 = makeTestConfiguration { ghcVersion = "ghc92"; };
+              ghc-9-4 = makeTestConfiguration { ghcVersion = "ghc94"; };
+              ghc-9-6 = makeTestConfiguration { ghcVersion = "ghc96"; };
+              all = pkgs.symlinkJoin {
+                name = "quaalude";
+                paths = [ ghc-9-2 ghc-9-4 ghc-9-6 ];
+              };
             };
-            all = pkgs.symlinkJoin {
-              name = "quaalude";
-              paths = [ ghc-9-2 ghc-9-4 ghc-9-6 ];
-            };
-          };
         };
       });
 }
