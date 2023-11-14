@@ -3,14 +3,16 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, flake-utils }:
     let packageName = "quaalude";
     in flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
+        pkgs-unstable = import nixpkgs-unstable { inherit system; };
 
         project = pkgs.haskellPackages.developPackage {
           root = ./quaalude;
@@ -49,9 +51,10 @@
               ghc-9-2 = makeTestConfiguration { ghcVersion = "ghc92"; };
               ghc-9-4 = makeTestConfiguration { ghcVersion = "ghc94"; };
               ghc-9-6 = makeTestConfiguration { ghcVersion = "ghc96"; };
+              ghc-9-8 = makeTestConfiguration { ghcVersion = "ghc98"; pkgs = pkgs-unstable; };
               all = pkgs.symlinkJoin {
                 name = "quaalude";
-                paths = [ ghc-9-2 ghc-9-4 ghc-9-6 ];
+                paths = [ ghc-9-2 ghc-9-4 ghc-9-6 ghc-9-8 ];
               };
             };
         };
