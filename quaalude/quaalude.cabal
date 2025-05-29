@@ -27,5 +27,5 @@ library
     default-language: GHC2021
     ghc-options: -Wall
     hs-source-dirs: library
-    build-depends: base ^>= 4.16 || ^>= 4.17 || ^>= 4.18 || ^>= 4.19
+    build-depends: base ^>= 4.16 || ^>= 4.17 || ^>= 4.18 || ^>= 4.19 || ^>= 4.20
     exposed-modules: Essentials
